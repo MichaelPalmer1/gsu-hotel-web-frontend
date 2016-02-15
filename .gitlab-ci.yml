@@ -1,0 +1,21 @@
+stages:
+  - test
+  - deploy
+
+before_script:
+  - cd hotel/
+#  - composer install
+
+#perform_tests:
+#  stage: test
+#  script: phpunit --coverage-text --colors=never
+
+deploy_files:
+  stage: deploy
+  only:
+    - master@classes/hotel-web
+  script:
+    - echo $RUNNER_PW | sudo -S cp -r . /var/www/hotel
+    - cd /var/www/hotel
+#    - composer update
+    - sudo -S chown -R www-data:www-data /var/www/hotel
