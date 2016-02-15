@@ -4,7 +4,6 @@ stages:
 
 before_script:
   - cd hotel/
-#  - composer install
 
 #perform_tests:
 #  stage: test
@@ -17,5 +16,4 @@ deploy_files:
   script:
     - echo $RUNNER_PW | sudo -S cp -r . /var/www/hotel
     - cd /var/www/hotel
-#    - composer update
     - sudo -S chown -R www-data:www-data /var/www/hotel
