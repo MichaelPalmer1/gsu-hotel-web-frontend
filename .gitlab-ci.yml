@@ -2,8 +2,8 @@ stages:
 #  - test
   - deploy
 
-before_script:
-  - cd hotel/
+#before_script:
+#  - cd hotel/
 
 #perform_tests:
 #  stage: test
