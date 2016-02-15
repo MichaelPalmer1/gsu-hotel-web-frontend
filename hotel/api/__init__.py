@@ -21,6 +21,7 @@ def note_repr(key):
 def index():
     return {
         'notes': {
+            'test': True,
             'url': request.host_url.rstrip('/') + url_for('notes_list')
         }
     }
