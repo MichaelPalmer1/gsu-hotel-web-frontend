@@ -3,3 +3,11 @@
 ### Requirements
 - Communicate with MySQL server
 - Authentication using API key & secret
+
+### Parameters
+- API Key
+- API Secret
+- Query
+
+### Returns
+- Query results in JSON
