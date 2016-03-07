@@ -11,3 +11,6 @@
 
 ### Returns
 - Query results in JSON
+
+### phpMyAdmin
+https://www.michaeldpalmer.com/phpmyadmin
