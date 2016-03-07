@@ -1,66 +1,52 @@
-from flask import request, url_for
-from flask.ext.api import FlaskAPI, status, exceptions
+from flask import request
+from flask.ext.api import FlaskAPI
+from flask.ext.mysql import MySQL
+from collections import OrderedDict
+from _mysql_exceptions import MySQLError
 
 app = FlaskAPI(__name__)
+mysql = MySQL()
 
-notes = {
-    0: 'do the shopping',
-    1: 'build the codez',
-    2: 'paint the door',
-}
-
-
-def note_repr(key):
-    return {
-        'url': request.host_url.rstrip('/') + url_for('notes_detail', key=key),
-        'text': notes[key]
-    }
+# MySQL configurations
+app.config['MYSQL_DATABASE_HOST'] = 'localhost'
+app.config['MYSQL_DATABASE_DB'] = 'hotel'
+app.config['MYSQL_DATABASE_USER'] = 'hotel'
+app.config['MYSQL_DATABASE_PASSWORD'] = 'ZfDh3wpDRBZbmUmC'
+mysql.init_app(app)
 
 
 @app.route("/", methods=['GET'])
 def index():
-    return {
-        'notes': {
-            'test': True,
-            'url': request.host_url.rstrip('/') + url_for('notes_list')
-        }
-    }
+    result = {}
+    conn = mysql.connect()
+    cursor = conn.cursor()
 
+    query_type = request.args.get('type', 'SELECT').upper()
+    query = request.args.get('query', None)
 
-@app.route("/notes/", methods=['GET', 'POST'])
-def notes_list():
-    """
-    List or create notes.
-    """
-    if request.method == 'POST':
-        note = str(request.data.get('text', ''))
-        idx = max(notes.keys()) + 1
-        notes[idx] = note
-        return note_repr(idx), status.HTTP_201_CREATED
+    if query:
+        try:
+            cursor.execute(query)
+            if query_type == 'SELECT':
+                data = cursor.fetchall()
+                if data:
+                    fields = [i[0] for i in cursor.description]
 
-    # request.method == 'GET'
-    return [note_repr(idx) for idx in sorted(notes.keys())]
+                    result['data'] = []
+                    for i, row in enumerate(data):
+                        result['data'].append(OrderedDict())
+                        for j, value in enumerate(row):
+                            column = fields[j]
+                            result['data'][i][column] = value
+                else:
+                    result['error'] = 'Data error'
+        except MySQLError as e:
+            result['error_code'] = e[0]
+            result['error'] = e[1]
+    else:
+        result['error'] = 'No query provided'
 
+    return result
 
-@app.route("/notes/<int:key>/", methods=['GET', 'PUT', 'DELETE'])
-def notes_detail(key):
-    """
-    Retrieve, update or delete note instances.
-    """
-    if request.method == 'PUT':
-        note = str(request.data.get('text', ''))
-        notes[key] = note
-        return note_repr(key)
-
-    elif request.method == 'DELETE':
-        notes.pop(key, None)
-        return '', status.HTTP_204_NO_CONTENT
-
-    # request.method == 'GET'
-    if key not in notes:
-        raise exceptions.NotFound()
-    return note_repr(key)
-
-
-# if __name__ == "__main__":
-#     app.run()
+if __name__ == "__main__":
+    app.run(debug=True, port=8000)
