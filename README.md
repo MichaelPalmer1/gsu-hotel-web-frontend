@@ -12,5 +12,8 @@
 ### Returns
 - Query results in JSON
 
+### API
+http://hotel.michaeldpalmer.com
+
 ### phpMyAdmin
 https://www.michaeldpalmer.com/phpmyadmin
