@@ -1,15 +1,10 @@
-# /usr/bin/python
-# import sys
-# import logging
+import sys
 import os
-from hotel import app
+from hotel import app as application
 
-# logging.basicConfig(stream=sys.stderr)
-# sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
+sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
+os.environ.setdefault('FLASK_SETTINGS_MODULE', 'hotel.settings.prod')
+application.config.from_object(os.environ['FLASK_SETTINGS_MODULE'])
 
-# from hotel import app
-app.config.from_object(os.environ['FLASK_SETTINGS_MODULE'])
-app.secret_key = 'secret'
-
-if app.config['DEBUG']:
-    app.run(debug=True, port=8000)
+if application.config['DEBUG']:
+    application.run(debug=True, port=8000)
