@@ -1,8 +1,10 @@
 # Hotel Web Frontend
 
-### Requirements
-- Communicate with MySQL server
-- Authentication using API key & secret
+### Configuration
+To run this on localhost, you need to set the environment variable:
+```
+FLASK_SETTINGS_MODULE = 'hotel.settings.dev'
+``` 
 
 ### Parameters
 - API Key
@@ -11,9 +13,6 @@
 
 ### Returns
 - Query results in JSON
-
-### API
-http://hotel.michaeldpalmer.com
 
 ### phpMyAdmin
 https://www.michaeldpalmer.com/phpmyadmin
