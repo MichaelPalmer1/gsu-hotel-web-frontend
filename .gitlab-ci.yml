@@ -1,6 +1,9 @@
 stages:
   - deploy
 
+variables:
+  CONTAINER: '1i20'
+
 deploy:
   stage: deploy
   only:
@@ -9,6 +12,8 @@ deploy:
     - web
   script:
     - docker build -t michaelpalmer/hotel .
-    - if [ ! -z "$(docker ps | grep hotel)" ]; then docker stop hotel; fi
-    - if [ ! -z "$(docker ps -a | grep hotel)" ]; then docker rm hotel; fi
+#     - curl -u "${CATTLE_ACCESS_KEY}:${CATTLE_SECRET_KEY}" -X POST -H 'Accept: application/json' -H 'Content-Type: application/json' -d '{"remove":true, "timeout":0}' 'http://rancher.michaeldpalmer.com:8000/v1/projects/1a5/containers/${CONTAINER}/?action=stop'
+#     - curl -u "${CATTLE_ACCESS_KEY}:${CATTLE_SECRET_KEY}" -X POST -H 'Accept: application/json' -H 'Content-Type: application/json' -d '{}' 'http://rancher.michaeldpalmer.com:8000/v1/projects/1a5/containers/${CONTAINER}/?action=purge'
+#     - if [ ! -z "$(docker ps | grep hotel)" ]; then docker stop hotel; fi
+#     - if [ ! -z "$(docker ps -a | grep hotel)" ]; then docker rm hotel; fi
     - docker run -d -e VIRTUAL_HOST=hotel.michaeldpalmer.com --name hotel --restart always michaelpalmer/hotel
