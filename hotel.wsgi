@@ -8,3 +8,5 @@ application.config.from_object(os.environ['FLASK_SETTINGS_MODULE'])
 
 if application.config['DEBUG']:
     application.run(debug=True, port=8000)
+else:
+    application.run(host='0.0.0.0', port=80)

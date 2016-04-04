@@ -1,19 +1,14 @@
 stages:
-#  - test
   - deploy
 
-#before_script:
-#  - cd hotel/
-
-#perform_tests:
-#  stage: test
-#  script: phpunit --coverage-text --colors=never
-
-deploy_files:
+deploy:
   stage: deploy
   only:
     - master@classes/hotel-web
+  tags:
+    - web
   script:
-    - echo $RUNNER_PW | sudo -S cp -r . /var/www/hotel
-    - cd /var/www/hotel
-    - sudo -S chown -R www-data:www-data /var/www/hotel
+    - docker build -t michaelpalmer/hotel .
+    - if [ ! -z "$(docker ps | grep hotel)" ]; then docker stop hotel; fi
+    - if [ ! -z "$(docker ps -a | grep hotel)" ]; then docker rm hotel; fi
+    - docker run -d -e VIRTUAL_HOST=hotel.michaeldpalmer.com --name hotel --restart always michaelpalmer/hotel
