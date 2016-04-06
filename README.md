@@ -6,8 +6,11 @@ To run this on localhost, you need to set the environment variable:
 FLASK_SETTINGS_MODULE = 'hotel.settings.dev'
 ``` 
 
-### API Address
-http://hotel.michaeldpalmer.com:8000
+#### API Address
+http://hotel.michaeldpalmer.com
+
+#### Database Host / phpMyAdmin
+http://db.michaeldpalmer.com
 
 ### Parameters
 - API Key
@@ -16,6 +19,3 @@ http://hotel.michaeldpalmer.com:8000
 
 ### Returns
 - Query results in JSON
-
-### phpMyAdmin
-https://www.michaeldpalmer.com/phpmyadmin
