@@ -3,8 +3,8 @@ stages:
 
 deploy:
   stage: deploy
-#  only:
-#    - master@classes/hotel-web
+  only:
+    - master@classes/hotel-web
   tags:
     - web
   script:
