@@ -19,5 +19,5 @@ RUN pip install -r requirements.txt
 EXPOSE 80
 
 # Start the server
-CMD ["python", "hotel.wsgi"]
+CMD ["python", "run.py"]
 

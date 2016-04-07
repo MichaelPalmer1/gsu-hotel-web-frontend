@@ -1,9 +1,16 @@
 from .base import *
+from .setting_utils import _init_app_db
 
 # MySQL configuration
-MYSQL_DATABASE_HOST = 'localhost'
-MYSQL_DATABASE_DB = 'hotel'
-MYSQL_DATABASE_USER = 'root'
-MYSQL_DATABASE_PASSWORD = ''
+DATABASE = {
+    'MYSQL_HOST': 'localhost',
+    'MYSQL_DB': 'hotel',
+    'MYSQL_USER': 'root',
+    'MYSQL_PASSWORD': ''
+}
 
 DEBUG = True
+
+_init_app_db(mysql, app, DATABASE)
+
+registered_tables = ['asset']

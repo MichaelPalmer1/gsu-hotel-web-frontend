@@ -7,6 +7,6 @@ os.environ.setdefault('FLASK_SETTINGS_MODULE', 'hotel.settings.prod')
 application.config.from_object(os.environ['FLASK_SETTINGS_MODULE'])
 
 if application.config['DEBUG']:
-    application.run(debug=True, port=8000)
+    application.run(port=8000, debug=True)
 else:
     application.run(host='0.0.0.0', port=80)
