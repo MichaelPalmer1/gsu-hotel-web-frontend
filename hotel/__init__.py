@@ -1,6 +1,6 @@
 from flask import request
 from flask.ext.api import FlaskAPI
-from flask.ext.mysql import MySQL
+from flask.ext.mysqldb import MySQL
 from collections import OrderedDict
 from _mysql_exceptions import MySQLError
 
