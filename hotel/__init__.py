@@ -5,8 +5,7 @@ from collections import OrderedDict
 from _mysql_exceptions import MySQLError
 
 app = FlaskAPI(__name__)
-mysql = MySQL()
-mysql.init_app(app)
+mysql = MySQL(app)
 
 
 @app.route("/", methods=['GET'])
