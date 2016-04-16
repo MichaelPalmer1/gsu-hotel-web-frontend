@@ -1,0 +1,51 @@
+hotel-web:
+  environment:
+    VIRTUAL_HOST: hotel.michaeldpalmer.com
+  external_links:
+  - 'Database/mysql:'
+  log_driver: ''
+  labels:
+    io.rancher.scheduler.affinity:host_label: host=aws
+  tty: true
+  log_opt: {}
+  image: 135913797772.dkr.ecr.us-east-1.amazonaws.com/michaelpalmer:hotel
+  stdin_open: true
+nginx-proxy:
+  ports:
+  - 443:443/tcp
+  - 80:80/tcp
+  environment:
+    DEFAULT_HOST: michaeldpalmer.com
+  log_driver: ''
+  labels:
+    io.rancher.scheduler.global: 'true'
+    io.rancher.container.pull_image: always
+    io.rancher.scheduler.affinity:host_label_ne: stack=0
+  tty: true
+  log_opt: {}
+  image: jwilder/nginx-proxy
+  volumes:
+  - /var/run/docker.sock:/tmp/docker.sock:ro
+  - /etc/ssl/certs:/etc/nginx/certs
+  stdin_open: true
+web:
+  environment:
+    VIRTUAL_HOST: www.michaeldpalmer.com,michaeldpalmer.com
+  log_driver: ''
+  labels:
+    io.rancher.container.pull_image: always
+    io.rancher.scheduler.affinity:host_label: host=aws
+  tty: true
+  log_opt: {}
+  image: michaelpalmer/dockers:web
+  stdin_open: true
+pma:
+  environment:
+    PMA_HOST: palmer-db.czvsgsrbybqn.us-east-1.rds.amazonaws.com
+    VIRTUAL_HOST: pma.michaeldpalmer.com
+  labels:
+    io.rancher.container.pull_image: always
+    io.rancher.scheduler.affinity:host_label: host=aws
+  tty: true
+  image: phpmyadmin/phpmyadmin
+  stdin_open: true
