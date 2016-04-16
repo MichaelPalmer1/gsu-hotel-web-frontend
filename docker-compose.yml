@@ -2,13 +2,14 @@ hotel-web:
   environment:
     VIRTUAL_HOST: hotel.michaeldpalmer.com
   external_links:
-  - 'Database/mysql:'
+  - 'Database/mysql:mysql'
   log_driver: ''
   labels:
+    io.rancher.container.pull_image: always
     io.rancher.scheduler.affinity:host_label: host=aws
   tty: true
   log_opt: {}
-  image: 135913797772.dkr.ecr.us-east-1.amazonaws.com/michaelpalmer:hotel
+  image: michaelpalmer/dockers:hotel
   stdin_open: true
 nginx-proxy:
   ports:
