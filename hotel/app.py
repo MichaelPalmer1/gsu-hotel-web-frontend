@@ -1,5 +1,4 @@
 from flask import request, abort, url_for
-from collections import OrderedDict
 from _mysql_exceptions import MySQLError
 
 from .settings.base import mysql, app
@@ -7,7 +6,7 @@ from .api_utils import get_tables, get_data, render_query
 
 
 # this can be changed to a search instead using POST to not worry about get params
-@app.route("/query/", methods=['GET', 'POST'])
+@app.route("/query", methods=['POST'])
 def query():
     """
     This endpoint will execute whatever sql query is sent to it. Aside from being a glaring security hole, this will
@@ -24,13 +23,10 @@ def query():
     """
     result = {}
 
-    if request.method == "GET":
-        return result
-
     cursor = mysql.connection.cursor()
 
     # get the data from the POST request
-    query = {'query': request.json.get('query')}
+    query = request.json.get('query')
 
     if query:
         try:
@@ -60,6 +56,7 @@ def index():
         result[table] = url_for('table_detail_view', table=table, _external=True)
 
     return result
+
 
 @app.route("/<table>/", methods=['GET'])
 def table_detail_view(table):
