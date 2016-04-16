@@ -1,0 +1,6 @@
+hotel-web:
+  scale: 1
+web:
+  scale: 1
+pma:
+  scale: 1
