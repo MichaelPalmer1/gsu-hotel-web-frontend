@@ -8,6 +8,7 @@ deploy:
   tags:
     - web
   script:
-    - docker build -t michaelpalmer/dockers:hotel .
-    - docker push michaelpalmer/dockers:hotel
-    - rancher-compose up -d -p --upgrade hotel-web
+    - docker build -t michaelpalmer/hotel .
+    - if [ ! -z "$(docker ps | grep hotel)" ]; then docker stop hotel; fi
+    - if [ ! -z "$(docker ps -a | grep hotel)" ]; then docker rm -f hotel; fi
+    - docker run -d -e VIRTUAL_HOST=hotel.michaeldpalmer.com --name hotel --restart always michaelpalmer/hotel
