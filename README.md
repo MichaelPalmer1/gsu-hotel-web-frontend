@@ -11,11 +11,3 @@ http://hotel.michaeldpalmer.com
 
 #### Database Host / phpMyAdmin
 http://db.michaeldpalmer.com
-
-### Parameters
-- API Key
-- API Secret
-- Query
-
-### Returns
-- Query results in JSON
