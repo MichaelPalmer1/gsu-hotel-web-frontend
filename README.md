@@ -1,6 +1,5 @@
 # Hotel Web Frontend
 
-
 ### Configuration
 To run this on localhost, you need to set the environment variable:
 ```
