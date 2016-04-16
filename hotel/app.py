@@ -7,7 +7,7 @@ from .api_utils import get_tables, get_data, render_query
 
 
 # this can be changed to a search instead using POST to not worry about get params
-@app.route("/query/", methods=['GET', 'POST'])
+@app.route("/query", methods=['POST'])
 def query():
     """
     This endpoint will execute whatever sql query is sent to it. Aside from being a glaring security hole, this will
@@ -24,13 +24,10 @@ def query():
     """
     result = {}
 
-    if request.method == "GET":
-        return result
-
     cursor = mysql.connection.cursor()
 
     # get the data from the POST request
-    query = {'query': request.json.get('query')}
+    query = request.json.get('query')
 
     if query:
         try:
