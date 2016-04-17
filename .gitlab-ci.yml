@@ -10,4 +10,4 @@ deploy:
   script:
     - docker build -t michaelpalmer/dockers:hotel .
     - docker push michaelpalmer/dockers:hotel
-    - rancher-compose up -d -p --upgrade hotel-web
+    - rancher-compose --project-name Website up -d -p --upgrade hotel-web
