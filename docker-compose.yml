@@ -2,7 +2,7 @@ hotel-web:
   environment:
     VIRTUAL_HOST: hotel.michaeldpalmer.com
   external_links:
-  - 'Database/mysql:mysql'
+  - Database/mysql:mysql
   log_driver: ''
   labels:
     io.rancher.container.pull_image: always
@@ -32,12 +32,10 @@ nginx-proxy:
 web:
   environment:
     VIRTUAL_HOST: www.michaeldpalmer.com,michaeldpalmer.com
-  log_driver: ''
   labels:
     io.rancher.container.pull_image: always
     io.rancher.scheduler.affinity:host_label: host=aws
   tty: true
-  log_opt: {}
   image: michaelpalmer/dockers:web
   stdin_open: true
 pma:
