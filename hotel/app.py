@@ -31,6 +31,7 @@ def query():
     if query:
         try:
             cursor.execute(query)
+            mysql.connection.commit()
             result = render_query(cursor)
 
         except MySQLError as e:
