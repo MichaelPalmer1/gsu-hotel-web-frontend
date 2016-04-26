@@ -1,3 +1,5 @@
+from decimal import Decimal
+
 from .settings.base import mysql
 from math import floor
 import datetime
@@ -42,6 +44,9 @@ def render_query(cursor):
             if isinstance(row_value, datetime.date):
                 # Convert date to string
                 row_value = str(row_value)
+            elif isinstance(row_value, Decimal):
+                # Convert decimal to float
+                row_value = float(row_value)
             elif isinstance(row_value, datetime.timedelta):
                 # Convert time to string
                 row_value = '%.2d:%.2d:%.2d' % (
